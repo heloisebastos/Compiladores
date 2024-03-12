@@ -1,0 +1,176 @@
+#Options
+GenerateScanner = true
+GenerateParser = true
+Language = Java
+ScannerName = Lexico
+ParserName = Sintatico
+SemanticName = Semantico
+ScannerCaseSensitive = true
+ScannerTable = Full
+Input = Stream
+Parser = LL
+#RegularDefinitions
+//HELOISE BASTOS
+
+//espaco,linha,tabulacao
+WS:[\ \n\t]
+
+//conjunto de numeros
+D:[0-9]
+
+//letras do alfabeto
+L:[A-Za-z]
+
+//espaço
+E: [\ ]
+
+S : [\+\-\?]
+
+//a* reconhece zero ou mais a's
+//a+ reconhece um ou mais a's
+//a? reconhece um a ou nenhum a.
+//î sentença vazia
+#Tokens
+:{WS}*
+
+inicio_pgm: "begin" //incio do programa
+fim_pgm: "end"     //fim do programa
+leia : "read"
+escreva : "write"
+inicio_condicional : "if"
+se_nao: "else"
+end_if : "endif"
+
+inicio_repeticao :"while"
+fimrepeticao : "endloop"
+
+
+tipo : "int"
+string : \"({L}| {D} | {E}| {S})*\"  //SEQUENCIA DE CARACTER
+num : {D}*
+
+variavel : {L} ({L}| {D})* //definicao variavel
+
+
+"="
+"("
+")"
+";"
+"+"
+"-"
+"*"
+"/"
+"<"
+">"
+"|"
+"!"
+
+
+
+#NonTerminals
+//comandos 
+<PROGRAM>
+<COMANDO_LIST>
+<COMANDO>
+
+
+<WRITE> 
+<READ> 
+
+<DECLARATION>
+<ATRIBUICAO>
+<UMA_EXPRESSION>
+
+
+<EXPRESSAO>
+<TERM>
+<TERM_TAIL>
+<SOMA_SUBTRACAO>
+<SOMA>
+<SUBTRACAO>
+<FACTOR>
+<FACTOR_TAIL>
+<MULT_DIV>
+<MULT>
+<DIV>
+
+
+
+<LOGICAL_OPERATOR>   
+<LOGICAL_EXPRESSION>
+
+<CONDITIONAL> 
+<LOOP> 
+<WHILE>
+
+
+<IF>
+<ELSE>
+
+
+
+#Grammar
+//estrutura do programa
+<PROGRAM>::= inicio_pgm <COMANDO_LIST> fim_pgm|î;
+
+//LISTA DE COMANDO PRODUZ COMANDOS
+<COMANDO_LIST> ::= <COMANDO> <COMANDO_LIST>| î; //lista de comando produz comando do tipo list de comand
+
+//COMANDOS PRODUZ 
+<COMANDO> ::= <WRITE> |<READ> | <DECLARATION>| <ATRIBUICAO> | <CONDITIONAL> | <LOOP>   ;
+
+//escreva
+<WRITE> ::= escreva "(" <EXPRESSAO> ")" ";";
+
+
+
+//leia
+<READ> ::= leia "(" variavel ")" ";" ;
+
+
+//comando declaracao
+//<DECLARATION> ::= tipo variavel ";";
+<DECLARATION> ::= tipo <ATRIBUICAO>  ; 
+<ATRIBUICAO>  ::= variavel <UMA_EXPRESSION> ;
+<UMA_EXPRESSION> ::= "=" <EXPRESSAO> ";";
+<UMA_EXPRESSION> ::= î;
+
+
+
+
+//EXPRESSAO NUMERICA
+
+<EXPRESSAO>::= <TERM> <TERM_TAIL>;
+<TERM_TAIL>::= <SOMA_SUBTRACAO> <TERM> <TERM_TAIL> | î;
+<TERM> ::= <FACTOR> <FACTOR_TAIL>;
+
+//estrutura das expressoes
+<FACTOR_TAIL> ::= <MULT_DIV> <FACTOR> <FACTOR_TAIL>;
+<FACTOR_TAIL> ::= î;
+<FACTOR> ::= "(" <EXPRESSAO> ")" ;
+<FACTOR> ::= variavel;
+<FACTOR> ::= num;
+<FACTOR> ::= string;
+<SOMA_SUBTRACAO> ::= <SOMA> | <SUBTRACAO>;
+
+//operações matematica
+<SOMA> ::= "+";
+<SUBTRACAO> ::= "-";
+<MULT_DIV> ::= <MULT> | <DIV>;
+<MULT> ::= "*";
+<DIV> ::= "/";
+
+//estrutura de repeticao  
+<LOOP> ::= <WHILE> fimrepeticao ;
+<WHILE> ::= inicio_repeticao "("<LOGICAL_EXPRESSION> ")"  <COMANDO_LIST>;
+
+
+//condicional
+<CONDITIONAL> ::= <IF>;
+<IF> ::= inicio_condicional "(" <LOGICAL_EXPRESSION>  ")" <COMANDO_LIST> <ELSE> end_if;
+<ELSE> ::= se_nao <COMANDO_LIST>| î;
+
+
+//operador logico
+<LOGICAL_EXPRESSION> ::=  <EXPRESSAO> <LOGICAL_OPERATOR> <EXPRESSAO>;
+<LOGICAL_OPERATOR> ::=  "<" | ">"|"|"|"!";

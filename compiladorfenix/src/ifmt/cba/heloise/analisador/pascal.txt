@@ -1,0 +1,44 @@
+begin
+
+  int numero =0 ;
+  write("Numero de linhas: ");
+  read(numero);
+  
+  int linha=0;
+
+  linha= 1;
+  
+   int cont1=0;
+   cont1=numero+1;
+   int cont2=0;
+   cont2 = linha+1;
+
+  while (linha < cont1) 
+      int valor=0;
+      valor = 1;
+      write("Valor: ");
+      write(valor);
+      
+      if (numero ! 1) 
+        while(linha < numero) 
+        valor = 1;
+        
+        write(valor);
+
+        int coluna=0;
+        coluna= 1;
+        while(coluna < cont2) 
+          valor= (valor * (linha - coluna + 1) ) / coluna;
+          write(valor);
+          coluna = coluna + 1;
+         endloop
+  
+        linha=linha + 1;
+        cont2=linha+1;
+       endloop
+           linha =linha + 1;
+            cont2=linha+1;
+     endif
+  endloop
+
+end

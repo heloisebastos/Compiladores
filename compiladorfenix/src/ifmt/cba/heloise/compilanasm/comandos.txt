@@ -1,0 +1,6 @@
+
+nasm -fwin32 .\nomearquivo.asm       
+
+ gcc -m32 .\nomearquivo.obj -o .\nomearquivo.exe   
+
+ .\nomearquivo.exe  

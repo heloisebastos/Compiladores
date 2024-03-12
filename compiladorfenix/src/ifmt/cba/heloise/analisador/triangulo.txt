@@ -1,0 +1,73 @@
+begin
+int a=0;
+int b=0;
+int c=0;
+int x=0;
+int y=0;
+int z=0;
+int v1=0;
+
+write("digite valor de a");
+read(a);
+write("digite valor de b");
+read(b);
+write("digite valor de c");
+read(c);
+
+x=a+b;
+y=a+c;
+z=b+c;
+
+if (x > c)
+    if (y  > b)     
+        if (z > a)
+            v1=1;
+            write ("sim eh triangulo");  
+
+            if(v1 | 1)
+              
+                if (a | b)
+                    if (b | c)
+                        write ("eh equilatero");
+                    endif
+                 endif
+                
+                if (a | b)
+                    if (b ! c)
+                        write ("eh isoceles ");
+                    endif
+                endif
+
+                if (a | c)
+                    if (c ! b)
+                        write ("eh isoceles");
+                    endif
+                endif
+
+                 if (b | c)
+                    if (c ! a)
+                        write ("eh isoceles");
+                    endif
+                endif
+
+                if(a ! b)   
+                    if(b ! c)   
+                        if (a ! c)
+                            write ("triangulo escaleno");
+                        endif
+                    endif
+                endif 
+
+            endif
+        endif
+    endif
+endif
+
+
+
+if (v1 | 0)
+    write ("nao eh triangulo"); 
+endif
+
+
+end
